@@ -1,0 +1,22 @@
+<launch>
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+  <node name="tcp_node" pkg="tcp_cmd_vel" type="tcp_pub.py"/>
+
+  <node pkg="uvc_camera" name="camera1" type="uvc_camera_node" output="screen">
+    <param name="device" type="string" value="/dev/video0"/>
+    <param name="width" type="int" value="320"/>
+    <param name="height" type="int" value="240"/>
+    <param name="pixel_format" value="mjpeg"/>
+    <param name="camera_frame_id" value="usb_cam"/>
+    <param name="io_method" value="mmap"/>
+    <param name="frame_id" value="camera"/>
+    <param name="camera_info_url" type="string" value="file:///home/{user_name}/.../camera.yaml"/>
+  </node>
+
+  <node name="web_video_server" pkg="web_video_server" type="web_video_server" />
+
+</launch>
